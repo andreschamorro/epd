@@ -1,12 +1,17 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QtPlugin>
 
+/* Load toolchain Epaper Plugin */
+Q_IMPORT_PLUGIN(QsgEpaperPlugin)
 
 int main(int argc, char *argv[])
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+
+    /* Set ENV vars */
+    qputenv("QMLSCENE_DEVICE", "epaper");
+    qputenv("QT_QPA_PLATFORM", "epaper:enable_fonts");
+    qputenv("QT_QPA_EVDEV_TOUCHSCREEN_PARAMETERS", "rotate=180");
 
     QGuiApplication app(argc, argv);
 
